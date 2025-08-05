@@ -14,41 +14,197 @@
                 <li><a href="#projets">Projets</a></li>
                 <li><a href="#apropos">À propos</a></li>
                 <li><a href="#contact">Contact</a></li>
+            <li style="list-style:none;display:inline;margin-left:1em;vertical-align:middle;">
+                <select id="lang-select" class="lang-select">
+                    <option value="fr">FR</option>
+                    <option value="en">EN</option>
+                </select>
+            </li>
             </ul>
         </nav>
     </header>
     <section id="accueil" class="hero">
         <h1>Bienvenue sur mon Portfolio</h1>
-        <p>Je suis [Ton Nom], développeur web passionné.</p>
+        <p>Je suis SkySynn, illustrateur pationné !</p>
+    </section>
+    <section id="preview">
+        <h2>Ce que je fais actuellement</h2>
+        <p>Je me spécialise dans la création de personnages 2D et de paysages dans un style manga / animé. Retrouvez ici prochainement mes illustrations originales, des concepts de personnages, des décors inspirés de l’univers japonais et bien plus encore !</p>
+        <div class="preview-gallery" id="preview-gallery">
+            <!-- Images preview insérées dynamiquement -->
+        </div>
+        <button id="preview-more" style="display:none;margin:1em auto 0 auto;display:block;">Voir plus</button>
     </section>
     <section id="projets">
         <h2>Mes Projets</h2>
-        <div class="projets-container">
-            <div class="projet">
-                <h3>Projet 1</h3>
-                <p>Description de ton projet 1.</p>
-            </div>
-            <div class="projet">
-                <h3>Projet 2</h3>
-                <p>Description de ton projet 2.</p>
-            </div>
+        <div class="projets-container" id="projets-container">
+            <!-- Les projets seront insérés ici automatiquement -->
         </div>
     </section>
     <section id="apropos">
         <h2>À propos de moi</h2>
-        <p>Quelques mots sur toi, ton parcours, tes compétences...</p>
+        <p>Je suis passionné par l’illustration et la création graphique dans l’univers manga/animé. Je réalise des personnages originaux, des paysages immersifs, ainsi que tout ce qui touche à la narration visuelle : créatures fantastiques, objets magiques, scènes d’action ou de vie quotidienne…<br><br>Mon objectif : donner vie à des univers inspirés du Japon et partager ma passion à travers chaque dessin !</p>
     </section>
     <section id="contact">
         <h2>Contact</h2>
-        <form>
-            <input type="text" placeholder="Votre nom" required>
-            <input type="email" placeholder="Votre email" required>
-            <textarea placeholder="Votre message" required></textarea>
+        <div class="contact-choice">
+            <button id="btn-discord" type="button">Contact par Discord</button>
+            <button id="btn-mail" type="button">Contact par Email</button>
+        </div>
+        <div id="contact-discord" class="contact-form" style="display:none;">
+            <label for="discord-user"><strong>Mon Discord :</strong></label>
+            <input id="discord-user" type="text" value="sky_synns" readonly style="width:180px;">
+            <small>Copiez mon pseudo Discord pour m’ajouter !</small>
+        </div>
+        <form id="contact-mail" class="contact-form" style="display:none;" action="https://formspree.io/f/xdkdwzky" method="POST">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" required></textarea>
             <button type="submit">Envoyer</button>
         </form>
+        <script>
+        // Affichage dynamique des contacts
+        const btnDiscord = document.getElementById('btn-discord');
+        const btnMail = document.getElementById('btn-mail');
+        const discordDiv = document.getElementById('contact-discord');
+        const mailForm = document.getElementById('contact-mail');
+        btnDiscord.onclick = () => {
+            discordDiv.style.display = '';
+            mailForm.style.display = 'none';
+        };
+        btnMail.onclick = () => {
+            discordDiv.style.display = 'none';
+            mailForm.style.display = '';
+        };
+        </script>
     </section>
     <footer>
         <p>&copy; 2025 [Ton Nom]. Tous droits réservés.</p>
     </footer>
+    <script src="projects.js"></script>
+    <script src="previews.js"></script>
+    <script src="translations.js"></script>
+    <script>
+    // Gestion multilingue
+    function setLang(lang) {
+        // Navigation
+        document.querySelector('a[href="#accueil"]').textContent = translations.nav.accueil[lang];
+        document.querySelector('a[href="#projets"]').textContent = translations.nav.projets[lang];
+        document.querySelector('a[href="#apropos"]').textContent = translations.nav.apropos[lang];
+        document.querySelector('a[href="#contact"]').textContent = translations.nav.contact[lang];
+        // Hero
+        document.querySelector('#accueil h1').textContent = translations.hero.titre[lang];
+        document.querySelector('#accueil p').textContent = translations.hero.texte[lang];
+        // Preview
+        document.querySelector('#preview h2').textContent = translations.preview.titre[lang];
+        document.querySelector('#preview p').textContent = translations.preview.texte[lang];
+        // Projets
+        document.querySelector('#projets h2').textContent = translations.projets.titre[lang];
+        // À propos
+        document.querySelector('#apropos h2').textContent = translations.apropos.titre[lang];
+        document.querySelector('#apropos p').innerHTML = translations.apropos.texte[lang];
+        // Contact
+        document.querySelector('#contact h2').textContent = translations.contact.titre[lang];
+        document.getElementById('btn-discord').textContent = translations.contact.discordBtn[lang];
+        document.getElementById('btn-mail').textContent = translations.contact.mailBtn[lang];
+        document.querySelector('label[for="discord-user"]').innerHTML = '<strong>' + translations.contact.discord[lang] + '</strong>';
+        document.querySelector('#contact-discord small').textContent = translations.contact.copier[lang];
+        // Formulaire mail
+        document.querySelector('label[for="nom"]').textContent = translations.contact.nom[lang];
+        document.querySelector('label[for="email"]').textContent = translations.contact.email[lang];
+        document.querySelector('label[for="message"]').textContent = translations.contact.message[lang];
+        document.querySelector('#contact-mail button[type="submit"]').textContent = translations.contact.envoyer[lang];
+        // Footer
+        document.querySelector('footer p').innerHTML = translations.footer.copyright[lang];
+        // Message projets vide (si présent)
+        const empty = document.querySelector('.projets-empty');
+        if (empty) empty.textContent = translations.projets.vide[lang];
+    }
+    const langSelect = document.getElementById('lang-select');
+    // Initialisation langue (FR par défaut)
+    let lang = localStorage.getItem('portfolio_lang') || 'fr';
+    langSelect.value = lang;
+    setLang(lang);
+    langSelect.onchange = function() {
+        lang = langSelect.value;
+        localStorage.setItem('portfolio_lang', lang);
+        setLang(lang);
+    };
+    </script>
+    <script>
+    // Génération dynamique des images preview
+    const previewGallery = document.getElementById('preview-gallery');
+    const previewMore = document.getElementById('preview-more');
+    if (typeof previews !== 'undefined' && Array.isArray(previews)) {
+        let shown = 3;
+        function renderPreviews(count) {
+            previewGallery.innerHTML = '';
+            previews.slice(0, count).forEach(img => {
+                const el = document.createElement('img');
+                el.src = img.src;
+                el.alt = img.alt;
+                el.className = 'preview-img';
+                previewGallery.appendChild(el);
+            });
+        }
+        renderPreviews(shown);
+        if (previews.length > 3) {
+            previewMore.style.display = 'block';
+            previewMore.onclick = function() {
+                renderPreviews(previews.length);
+                previewMore.style.display = 'none';
+            };
+        } else {
+            previewMore.style.display = 'none';
+        }
+    }
+    </script>
+    <script>
+        // Génération dynamique des projets
+        const container = document.getElementById('projets-container');
+        if (typeof projets !== 'undefined' && Array.isArray(projets)) {
+            if (projets.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'projets-empty';
+                emptyDiv.textContent = 'vide pour le moment...';
+                container.appendChild(emptyDiv);
+            } else {
+                projets.forEach(projet => {
+                    const div = document.createElement('div');
+                    div.className = 'projet';
+                    div.innerHTML = `
+        <div class="carousel">
+            <button class="carousel-arrow left" style="display:none">&#8592;</button>
+            <img src="${projet.images && projet.images.length ? projet.images[0] : ''}" alt="${projet.titre}" class="projet-img carousel-img">
+            <button class="carousel-arrow right" ${projet.images && projet.images.length > 1 ? '' : 'style=\"display:none\"'}>&#8594;</button>
+        </div>
+        <h3>${projet.titre}</h3>
+        <p>${projet.description}</p>
+    `;
+    // Carrousel JS
+        if (projet.images && projet.images.length > 1) {
+            const img = div.querySelector('.carousel-img');
+            const left = div.querySelector('.carousel-arrow.left');
+            const right = div.querySelector('.carousel-arrow.right');
+            let idx = 0;
+            left.addEventListener('click', () => {
+                idx = (idx - 1 + projet.images.length) % projet.images.length;
+                img.src = projet.images[idx];
+            });
+            right.addEventListener('click', () => {
+                idx = (idx + 1) % projet.images.length;
+                img.src = projet.images[idx];
+            });
+            left.style.display = 'inline-block';
+            right.style.display = 'inline-block';
+        }
+                    container.appendChild(div);
+                });
+            }
+        }
+    </script>
 </body>
 </html>
